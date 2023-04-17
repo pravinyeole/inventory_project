@@ -78,7 +78,7 @@ class HomeController extends Controller
         if(Auth::user()->action == 1)
         {
             $action = 2;
-            $where = ['action' => $action,'status'=>'Active'];
+            $where = ['action' => $action];
         }
         else{
             $action = 3;

@@ -1,4 +1,9 @@
 @extends('layouts.app_new')
+<style>
+    .center{
+        text-align:center;
+    }
+</style>
 @section('content')
 <main id="main" class="main">
     <div>
@@ -6,36 +11,40 @@
         <table id="table_id" class="table table-condensed table-striped table-hover">
             <thead>
                 <tr>
-                    <th>
+                    <th class="center">
+                        #
+                    </th>
+                    <th class="center">
                         Category
                     </th>
-                    <th>
+                    <th class="center">
                         Manufacture Name
                     </th>
-                    <th>
+                    <th class="center">
                         Product Name
                     </th>
-                    <th>
-                        Date of Transaction
+                    <th class="center">
+                        Unit Name
                     </th>
-                    <th>
+                    <th class="center">
                         Available Quantity
                     </th>
-                    <th>
-                        Order Received Quantity
+                    <th class="center">
+                        Required Quantity
                     </th>
                 </tr>
             </thead>
 
             <tbody>
-                @foreach($data AS $dt)
+                @foreach($data AS $key => $dt)
                     <tr>
-                        <td>{{$dt->category_name}}</td>
-                        <td>{{$dt->mn_name}}</td>
-                        <td>{{$dt->pn_name}}</td>
-                        <td></td>
-                        <td>{{$dt->qty}}</td>
-                        <td>{{$dt->received_qty}}</td>
+                        <td class="center">{{$key+1}}</td>
+                        <td class="center">{{$dt->category_name}}</td>
+                        <td class="center">{{$dt->mn_name}}</td>
+                        <td class="center">{{$dt->pn_name}}</td>
+                        <td class="center">{{$dt->un_name}}</td>
+                        <td class="center">{{$dt->availabel_qty}}</td>
+                        <td class="center">{{$dt->request_qty}}</td>
                     </tr>
                 @endforeach            
             </tbody>

@@ -82,3 +82,10 @@ Route::any('/get_order_by_id', 'OrderController@getOrderById')->name('get_order_
 Route::any('/view_invoice/{id?}', 'OrderController@viewInvoice')->name('view_invoice');
 Route::any('/all_clinc_users', 'HomeController@all_clinc_users')->name('all_clinc_users');
 Route::any('/stock_details', 'StoreController@stockDetails')->name('stock_details');
+Route::any('/unit_by_category_man_clinic', 'AjaxController@unitByCategoryManClinic')->name('unit_by_category_man_clinic');
+
+Route::any('/get_recive_id', 'ReceiveController@get_recive_id')->name('get_recive_id');
+
+
+Route::any('/stock-inword', 'ReportController@stockInword');
+Route::any('/stock-outword', 'ReportController@stockOutword');

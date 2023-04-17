@@ -28,26 +28,26 @@
 
     /* content editable */
 
-    *[contenteditable] {
+    *[] {
         border-radius: 0.25em;
         min-width: 1em;
         outline: 0;
     }
 
-    *[contenteditable] {
+    *[] {
         cursor: pointer;
     }
 
-    *[contenteditable]:hover,
-    *[contenteditable]:focus,
-    td:hover *[contenteditable],
-    td:focus *[contenteditable],
+    *[]:hover,
+    *[]:focus,
+    td:hover *[],
+    td:focus *[],
     img.hover {
         background: #DEF;
         box-shadow: 0 0 1em 0.5em #DEF;
     }
 
-    span[contenteditable] {
+    span {
         display: inline-block;
     }
 
@@ -126,10 +126,6 @@
 
     /* header */
 
-    header {
-        margin: 0 0 3em;
-    }
-
     header:after {
         clear: both;
         content: "";
@@ -141,7 +137,7 @@
         border-radius: 0.25em;
         color: #FFF;
         margin: 0 0 1em;
-        padding: 0.5em 0;
+        padding: 10px;
     }
 
     header address {
@@ -216,7 +212,7 @@
     table.meta,
     table.balance {
         float: right;
-        width: 36%;
+        width: 100%;
     }
 
     table.meta:after,
@@ -267,7 +263,7 @@
     }
 
     table.inventory td:nth-child(5) {
-        text-align: right;
+        text-align: center;
         width: 12%;
     }
 
@@ -278,8 +274,10 @@
         width: 50%;
     }
 
-    table.balance td {
-        text-align: right;
+    table.balance td,table.balance th {
+        text-align: center;
+        font-size: large;
+        font-weight: bolder;
     }
 
     /* aside */
@@ -372,48 +370,73 @@
 
     @page {
         margin: 0;
+    }  
+    .center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        height: 100%;
+    }
+    h4 { 
+        display: block;
+        font-size: 12px;
+        margin-left: 0;
+        margin-right: 0;
+        font-weight: bold;
+    }  
+    table tr td{
+        text-align: center;
+    }
+    @media (min-width: 1200px){
+        .h1, h1 {
+            font-size: 1.5rem !important;
+        }
     }
 </style>
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" crossorigin="anonymous">
 <body>
     <header>
         <h1>Challan</h1>
-        <address contenteditable>
-            <p>{{ucfirst($data[0]['branch_name'])}}</p>
-            <p>{{ucfirst($data[0]['location'])}}<br></p>
-            <!-- <p>(800) 555-1234</p> -->
-        </address>
-        <span><img alt="" src="http://www.jonathantneal.com/examples/invoice/logo.png"><input type="file" accept="image/*"></span>
     </header>
     <article>
-        <h1>Recipient</h1>
-        <address contenteditable>
-            <p>Some Company<br>c/o Some Guy</p>
-        </address>
-        <table class="meta">
-            <tr>
-                <th><span contenteditable>Invoice #</span></th>
-                <td><span contenteditable>{{$data[0]['order_id']}}</span></td>
-            </tr>
-            <tr>
-                <th><span contenteditable>Date</span></th>
-                <td><span contenteditable>{{date('F d,Y',strtotime($data[0]['created_at']))}}</span></td>
-            </tr>
-            <!-- <tr>
-                <th><span contenteditable>Amount Due</span></th>
-                <td><span id="prefix" contenteditable>$</span><span>600.00</span></td>
-            </tr> -->
-        </table>
+        <div class="col-md-12 row">
+            <div class="col-md-4">
+                <address >
+                    <p>Recipient,</p>
+                    <p>{{ucfirst($data[0]['branch_name'])}}<br>{{ucfirst($data[0]['location'])}}</p>
+                </address>
+            </div>
+            <div class="col-md-4">
+                <span><img src="{{url('img/dental_clinic_logo.jpg')}}" class="center"></span>
+            </div>
+            <div class="col-md-4">
+                <table class="meta">
+                    <tr>
+                        <th>Invoice #</th>
+                        <td>{{$data[0]['order_id']}}</td>
+                    </tr>
+                    <tr>
+                        <th>Date</th>
+                        <td>{{date('F d,Y',strtotime($data[0]['created_at']))}}</td>
+                    </tr>
+                    <!-- <tr>
+                        <th>Amount Due</th>
+                        <td><span id="prefix" >$</span>600.00</td>
+                    </tr> -->
+                </table>
+            </div>
+        </div>
         <table class="inventory">
             <thead>
                 <tr>
-                    <th><span contenteditable>Item</span></th>
-                    <th><span contenteditable>Category</span></th>
-                    <th><span contenteditable>Manufacturer</span></th>
-                    <th><span contenteditable>Rate</span></th>
-                    <th><span contenteditable>Required Quantity</span></th>
-                    <th><span contenteditable>Dispatched Quantity</span></th>
-                    <th><span contenteditable>Price</span></th>
+                    <th>Item</th>
+                    <th>Category</th>
+                    <th>Manufacturer</th>
+                    <th>Rate</th>
+                    <th>Required Quantity</th>
+                    <th>Dispatched Quantity</th>
+                    <th>Price</th>
                 </tr>
             </thead>
             <tbody>
@@ -424,39 +447,24 @@
                     $grand_total = $total+$grand_total;
                     @endphp
                 <tr>
-                    <td><a class="cut">-</a><span contenteditable>{{$dt->product_name}}</span></td>
-                    <td><span contenteditable>{{$dt->category_name}}</span></td>
-                    <td><span contenteditable>{{$dt->mn_name}}</span></td>
-                    <td><span data-prefix>Rs.</span><span contenteditable>{{$dt->prod_price}}</span></td>
-                    <td><span contenteditable>{{$dt->required_qty}}</span></td>
-                    <td><span contenteditable>{{$dt->provided_qty}}</span></td>
-                    <td><span data-prefix>Rs.</span><span>{{$total}}</span></td>
+                    <td><a class="cut">-</a>{{$dt->product_name}}</td>
+                    <td>{{$dt->category_name}}</td>
+                    <td>{{$dt->mn_name}}</td>
+                    <td><span data-prefix>Rs.{{$dt->prod_price}}</span></td>
+                    <td>{{$dt->required_qty}}</td>
+                    <td>{{$dt->provided_qty}}</td>
+                    <td><span data-prefix>Rs.</span>{{$total}}</td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
-        <!-- <a class="add">+</a> -->
         <table class="balance">
             <tr>
-                <th><span contenteditable>Total</span></th>
+                <th>Total</th>
                 <td><span data-prefix>Rs.</span><span>{{$grand_total}}</span></td>
             </tr>
-            <!-- <tr>
-                <th><span contenteditable>Amount Paid</span></th>
-                <td><span data-prefix>$</span><span contenteditable>0.00</span></td>
-            </tr>
-            <tr>
-                <th><span contenteditable>Balance Due</span></th>
-                <td><span data-prefix>$</span><span>600.00</span></td>
-            </tr> -->
         </table>
     </article>
-    <!-- <aside>
-        <h1><span contenteditable>Additional Notes</span></h1>
-        <div contenteditable>
-            <p>A finance charge of 1.5% will be made on unpaid balances after 30 days.</p>
-        </div>
-    </aside> -->
 </body>
 
 </html>

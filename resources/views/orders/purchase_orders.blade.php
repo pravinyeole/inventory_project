@@ -67,26 +67,21 @@
                         <div class="form-group row">
                             <div class="col-md-3">
                                 <label for="product_unit" class="col-form-label text-md-right">{{ __('Product Unit') }}</label>
-                                <select id="product_unit" class="form-control @error('product_unit') is-invalid @enderror reset_select_two" name="product_unit" required>
-                                    <option disabled> Select Unit</option>
-                                </select>
-                                <!-- <input type="text" id="product_unit" class="form-control @error('product_unit') is-invalid @enderror make_empty" name="product_unit" required disabled> -->
-                                @error('product_unit')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
+                                
+                                <input type="text" id="product_unit" class="form-control product_unit" readonly>
+                                <input type="hidden" id="product_unit_id" class="form-control product_unit_id" name="product_unit" readonly>
+                               
                             </div>
                         
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <label for="product_price" class=" col-form-label text-md-right">{{ __('Product Price') }}</label>
-                                <input id="product_price" type="text" min="1" class="form-control @error('product_price') is-invalid @enderror make_empty" name="product_price" required readonly disabled>
+                                <input id="product_price" type="text" min="1" class="form-control @error('product_price') is-invalid @enderror make_empty" name="product_price" value="0" required readonly disabled>
                                 @error('product_price')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
-                            </div>
+                            </div> -->
                             <div class="col-md-3">
                                 <label for="product_quntity" class=" col-form-label text-md-right">{{ __('Product Quantity') }}</label>
                                 <input id="product_quntity" type="number" min="1" class="form-control @error('product_quntity') is-invalid @enderror make_empty" name="product_quntity" required>
@@ -96,7 +91,7 @@
                                 </span>
                                 @enderror
                             </div>
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <label for="product_total" class=" col-form-label text-md-right">{{ __('Product Total') }}</label>
                                 <input id="product_total" type="number" min="1" class="form-control @error('product_total') is-invalid @enderror make_empty" name="product_total" required readonly disabled>
                                 @error('product_total')
@@ -104,25 +99,28 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
+                            </div> -->
+                            <div class="col-md-3">
+                            <label for="product_quntity" class=" col-form-label text-md-right"></label>
+                                <button type="button" id="add_new_item" class="btn btn-primary" style="margin-top:30px;">Add More Item</button>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <button type="button" id="add_new_item" class="btn btn-primary" style="float:right">Add New Item</button>
-                        </div>
+
                         <table class="table table-condensed table-striped table-hover" id="items_table">
                             <thead>
                                 <tr>
                                     <th>Product Name</th>
-                                    <th>Product Price</th>
+                                    <!-- <th>Product Price</th> -->
+                                    <th>Product Unit</th>
                                     <th>Product quantity</th>
-                                    <th>Total</th>
+                                    <!-- <th>Total</th> -->
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody id="append_row">
                                 <tr><td colspan="5" style="text-align:center">No records</td></tr>
                             </tbody>
-                            <tfoot id="footer_row"><tr><th colspan="3" style="text-align:center">Total</th><th>Rs.0.00</th><th></th></tr></tfoot>
+                            <!-- <tfoot id="footer_row"><tr><th colspan="3" style="text-align:center">Total</th><th>Rs.0.00</th><th></th></tr></tfoot> -->
                         </table>
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4" >
@@ -194,6 +192,7 @@ $('#add_new_item').click(function(){
         itemData : {'product_name':prod_name,'product_id':prod_id,'category_id':category_id,'manufracture_id':manufacturer_id,'unit_name':unit_name,'unit_id':unit_id,'prod_price':prod_price,'prodct_qty':product_quntity,'prodct_total':prod_total}
     });
     console.log(productArray);
+    $('.product_unit').val('');
     generateTbale();
 });
 function deleteRow(vg){
@@ -208,13 +207,15 @@ function generateTbale(){
     $.each(productArray, function( index, value ) {
         total = value.itemData.prodct_qty*value.itemData.prod_price;
         grand_total = grand_total + total;
-        tb_html += '<tr><th><input type="text" class="form-control" readonly disabled value="'+value.itemData.product_name+'"></th><th><input type="text" class="form-control" readonly disabled value="'+value.itemData.prod_price+'"></th><th><input type="text" class="form-control" readonly disabled value="'+value.itemData.prodct_qty+'"></th><th><input type="text" class="form-control" readonly disabled value="Rs. '+total+'"></th><th><button type="button" class="btn btn-danger deleteRow" onclick='+"deleteRow('"+value.itemData.product_name+'_'+value.itemData.product_id+"')"+'>Delete</button></th></tr>';
+        // tb_html += '<tr><th><input type="text" class="form-control" readonly disabled value="'+value.itemData.product_name+'"></th><th><input type="text" class="form-control" readonly disabled value="'+value.itemData.prod_price+'"></th><th><input type="text" class="form-control" readonly disabled value="'+value.itemData.prodct_qty+'"></th><th><input type="text" class="form-control" readonly disabled value="Rs. '+total+'"></th><th><button type="button" class="btn btn-danger deleteRow" onclick='+"deleteRow('"+value.itemData.product_name+'_'+value.itemData.product_id+"')"+'>Delete</button></th></tr>';
+
+        tb_html += '<tr><th><input type="text" class="form-control" readonly disabled value="'+value.itemData.product_name+'"></th><th><input type="text" class="form-control" readonly disabled value="'+value.itemData.unit_name+'"></th><th><input type="text" class="form-control" readonly disabled value="'+value.itemData.prodct_qty+'"></th><th><button type="button" class="btn btn-danger deleteRow" onclick='+"deleteRow('"+value.itemData.product_name+'_'+value.itemData.product_id+"')"+'>Delete</button></th></tr>';
     });
-    var tb_footer_html = '<tr><th colspan="3" style="text-align:center">Total</th><th><input type="text" class="form-control" readonly disabled value="Rs. '+grand_total+'"></th><th></th></tr>';
+    // var tb_footer_html = '<tr><th colspan="3" style="text-align:center">Total</th><th><input type="text" class="form-control" readonly disabled value="Rs. '+grand_total+'"></th><th></th></tr>';
     $('#append_row').empty();
     $('#append_row').append(tb_html);
-    $('#footer_row').empty();
-    $('#footer_row').append(tb_footer_html);
+    // $('#footer_row').empty();
+    // $('#footer_row').append(tb_footer_html);
     $('.make_empty').empty();
     $('.make_empty').val('');
     $('.reset_select').prop('selectedIndex',0);
@@ -270,27 +271,27 @@ $('#final_submit').click(function(){
 function splitProductDetails(val,splitby){
     return val.split(splitby);
 }
-$('#product_unit').change(function(){
-    var prod_details = splitProductDetails($('#product_id').val(),'--');
-    var prod_id = prod_details[0];
-    // var prod_price = prod_details[3];
-    // $('#product_price').val(prod_price);
-    $.ajax({
-            url: 'price_by_unit_cat_man',
-            type: 'POST',
-            data: {
-                _token: CSRF_TOKEN,
-                man_id: $('#manufacturer_id').val(),
-                cat_id: $('#category_id').val(),
-                prod_id: prod_id,
-                unit_id: $('#product_unit').val(),
-            },
-            dataType: 'JSON',
-            success: function(data) {
-                $('#product_price').val(data);
-            }
-        });
-});
+// $('#product_unit').change(function(){
+//     var prod_details = splitProductDetails($('#product_id').val(),'--');
+//     var prod_id = prod_details[0];
+//     // var prod_price = prod_details[3];
+//     // $('#product_price').val(prod_price);
+//     $.ajax({
+//             url: 'price_by_unit_cat_man_clinic',
+//             type: 'POST',
+//             data: {
+//                 _token: CSRF_TOKEN,
+//                 man_id: $('#manufacturer_id').val(),
+//                 cat_id: $('#category_id').val(),
+//                 prod_id: prod_id,
+//                 unit_id: $('#product_unit').val(),
+//             },
+//             dataType: 'JSON',
+//             success: function(data) {
+//                 $('#product_price').val(data);
+//             }
+//         });
+// });
 $('#product_quntity').change(function(){
     var prod_details = splitProductDetails($('#product_id').val(),'--');
     var prod_price = $('#product_price').val();
@@ -307,7 +308,7 @@ $('#product_id').change(function(){
     $('#product_unit').empty();
     $('#product_unit').append('<option selected disabled> Select Option</option>');
     $.ajax({
-        url: 'unit_by_category_man',
+        url: 'unit_by_category_man_clinic',
         type: 'POST',
         data: {
             _token: CSRF_TOKEN,
@@ -318,15 +319,21 @@ $('#product_id').change(function(){
         dataType: 'JSON',
         success: function(data) {
             // $('#product_unit').val(data.name);
-            jQuery.each( data, function( i, val ) {
-                $('#product_unit').append(new Option(val.name, val.id)); 
-            });    
+            // jQuery.each( data, function( i, val ) {
+            //     $('#product_unit').append(new Option(val.name, val.id)); 
+            // });
+            $('#product_unit').val(data.data.unit_model.name);
+            $('#product_unit_id').val(data.data.unit_model.id);
+            $('#product_price').val(data.cost);    
         }
     });
 });
 $('#category_id').change(function(){
     $('#manufacturer_id').empty();
     $('#manufacturer_id').append('<option selected disabled> Select Option</option>');
+    $('#product_id').empty();
+    $('#product_id').append('<option selected disabled> Select Option</option>');
+    $('.product_unit').val('');
     $.ajax({
         url: 'manufracture_by_category',
         type: 'POST',

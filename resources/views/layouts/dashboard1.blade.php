@@ -85,6 +85,6 @@
 
 <script type="text/javascript">
   setTimeout(function(){
-    location = 'http://localhost:8000/home'
+    location = 'http://manage.neevwellbeing.in/home'
   },60000)
 </script>

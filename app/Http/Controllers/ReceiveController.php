@@ -55,4 +55,12 @@ class ReceiveController extends Controller
         session()->flash('alert-class', 'alert-success'); 
         return Redirect::to('/unit')->with(['status' =>  'success']);
     }
+
+    public function get_recive_id(Request $request)
+    {
+        $qty = $request['qty'];
+        $recive_id = $request['recive_id'];
+        $data = TBLDispatch::where(['id'=>$recive_id])->Update(['updated_qty'=>$qty]);
+        return ['status'=>'success'];
+    }
 }

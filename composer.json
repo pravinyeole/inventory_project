@@ -16,7 +16,8 @@
         "laravel/framework": "^7.29",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^2.4",
-        "milon/barcode": "^10.0"
+        "milon/barcode": "^10.0",
+        "yajra/laravel-datatables-buttons": "^4.13"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

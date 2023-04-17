@@ -38,7 +38,7 @@ class ManufacturerController extends Controller
     public function set_manufacturer(Request $request)
     {
         $validatedData = $request->validate([
-            'category_name' => ['required', 'unique:posts', 'max:255'],
+            'category_name' => ['required'],
             'manufacturer_name' => ['required'],
         ]);
         $data['name'] = ucfirst(strtolower($request['manufacturer_name']));

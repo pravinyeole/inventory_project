@@ -68,13 +68,41 @@
                             </div>
                         </div>
 
-                        <!-- <div class="form-group row">
-                            <label for="cost" class="col-md-4 col-form-label text-md-right">{{ __('Cost of Product') }}</label>
+                        <div class="form-group row">
+                            <label for="usage" class="col-md-4 col-form-label text-md-right">{{ __('Usage') }}</label>
                             <div class="col-md-6">
-                                <input id="cost" type="text" class="form-control @error('cost') is-invalid @enderror" name="cost" value="{{ $data['prod_price'] }}" required autocomplete="cost">
-                            </div>
-                        </div> -->
+                                <input id="usage" type="text" class="form-control @error('usage') is-invalid @enderror" name="usage"  required autocomplete="usage" Placeholder="Usage" value="{{ $data['usage'] }}">
 
+                                @error('usage')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div  class="form-group row">
+                            <label for="tags" class="col-md-4 col-form-label text-md-right">{{ __('Tags') }}</label>
+                            <div class="col-md-6">
+                                <input id="tags" type="text" class="form-control" name="tags" placeholder="Tags" required autocomplete="tags" value="{{ $data['tags'] }}">
+                                
+                                @error('tags')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div  class="form-group row">
+                            <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Description') }}</label>
+                            <div class="col-md-6">
+                                <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="description" rows="3" cols="4">{{ $data['description'] }} </textarea>
+                                @error('description')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <label for="location_name" class="col-md-4 col-form-label text-md-right">{{ __('Action') }}</label>
                             
@@ -88,6 +116,21 @@
                                         <option value="0" selected>In-Active</option>
                                     @endif
                                 </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="photo" class="col-md-4 col-form-label text-md-right">{{ __('Photo') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="photo" type="file" class="form-control" name="photo" value="{{ old('photo') }}">
+                                <input type="hidden" class="form-control" name="old_photo" value="{{ $data['photo'] }}">
+                                <img src="{{URL::to('/').'/images/'.$data['photo']}}"  style="width: 300px; height: 100px;">
+                                @error('photo')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                         </br>

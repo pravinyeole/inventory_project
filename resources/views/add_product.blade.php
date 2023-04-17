@@ -44,12 +44,51 @@
                             <div>
                                 <label for="unit" class=" col-form-label text-md-right">{{ __('Unit') }}</label>
                                 <select name="unit" class="form-select">
+                                    
                                 <option selected disabled>Select Unit</option>
                                     @foreach($unit as $k => $val)
                                     <option value="{{$val['id']}}">{{$val['name']}}</option>
                                     @endforeach
                                 </select>
                             </div>
+
+                        <div>
+                            <label for="usage" class=" col-form-label text-md-right">{{ __('Usage') }}</label>
+                            <input id="usage" type="text" class="form-control @error('usage') is-invalid @enderror" name="usage"  required autocomplete="usage" Placeholder="Usage">
+
+                            @error('usage')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        <div>
+                            <label for="tags" class=" col-form-label text-md-right">{{ __('Tags') }}</label>
+                            <input id="tags" type="text" class="form-control" name="tags" placeholder="Tags" required autocomplete="tags">
+                            @error('tags')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        <div class="photo">
+                            <label for="photo" class=" col-form-label text-md-right">{{ __('Photo') }}</label>
+                            <input id="photo" type="file" class="form-control" name="photo" value="{{ old('photo') }}" autocomplete="photo">
+                            @error('photo')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        <div>
+                            <label for="description" class=" col-form-label text-md-right">{{ __('Description') }}</label>
+                            <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="description" rows="3" cols="4"> </textarea>
+                            @error('description')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
 
                             <!-- <div>
                                 <label for="cost" class=" col-form-label text-md-right">{{ __('Cost of Product') }}</label>

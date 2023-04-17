@@ -102,7 +102,7 @@ class DispatchController extends Controller
     }
     public function get_bar_code_data(Request $request)
     {   
-        return Store::with('Unit_model','Category_model','Manufacturer_model','Product_model')->where('barcode_id',$request->barcode_text)->first();
+        return Store::with('Unit_model','Category_model','Manufacturer_model','Product_model')->where('barcode_id',$request->barcode_text)->orderBy('id')->first();
     }
     
     public function edit_stock(Request $request)

@@ -13,7 +13,7 @@
           <th>OrderBy</th>
           <th>Date</th>
           <!-- <th>Products Name/Qty</th> -->
-          <th>Amount</th>
+          <!-- <th>Amount</th> -->
           <th>Status</th>
           <th>Remarks</th>
           <th>Action</th>
@@ -28,7 +28,7 @@
           <td>{{$v['clinic_name']}}</td>
           <td>{{date('F d,Y',strtotime($v['created_at']))}}</td>
           <!-- <td>{{$v['product_name']}}/{{$v['product_qty']}}</td> -->
-          <td>{{$v['total_price']}}</td>
+          <!-- <td>{{$v['total_price']}}</td> -->
           <td>{{($v['order_status']==0)?'Pending':'Completed'}}</td>
           <td>{{$v['received_remarks']}}</td>
           <td>
@@ -98,11 +98,13 @@
                       <thead style="background-color:#84B0CA ;" class="text-white">
                         <tr>
                           <th scope="col">#</th>
-                          <th scope="col">Manufracture Name</th>
+                          <th scope="col">Manufracture</th>
+                          <th scope="col">Product</th>
                           <th scope="col">Description</th>
                           <th scope="col">Qty</th>
-                          <th scope="col">Unit Price</th>
-                          <th scope="col">Amount</th>
+                          <th scope="col">Unit</th>
+                          <!-- <th scope="col">Qty</th>
+                          <th scope="col">Amount</th> -->
                         </tr>
                       </thead>
                       <tbody id="product_details">
@@ -116,13 +118,13 @@
                       <!-- <p class="ms-3">Add additional notes and payment information</p> -->
 
                     </div>
-                    <div class="col-xl-4">
+                    <!-- <div class="col-xl-4">
                       <ul class="list-unstyled">
                         <li class="text-muted ms-3"><span class="text-black me-4">SubTotal</span><span class="sub_total"></span></li>
                         <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Tax(15%)</span><span class="gst"></span></li>
                       </ul>
                       <p class="text-black float-start"><span class="text-black me-3"> Total Amount</span><span style="font-size: 20px;" class="grand_total"></span></p>
-                    </div>
+                    </div> -->
                   </div>
                   <hr>
                   <!-- <div class="row">
@@ -161,18 +163,20 @@
       data: {
         _token: CSRF_TOKEN,
         order_id: order_id,
+        view_name: "recive_orders",
       },
       dataType: 'JSON',
       success: function(data) {
         jQuery.each(data, function(i, val) {
           var total = val.price_per_unit * val.product_qty;
-          var html = '<tr><th scope="row">' + (i + 1) + '</th><td>' + val.mn_name + '</td><td>' + val.name + '</td><td>' + val.product_qty + ' (' + val.product_unit + ')</td><td>Rs. ' + val.price_per_unit + '</td><td>Rs. ' + total + '</td></tr>';
+          // var html = '<tr><th scope="row">' + (i + 1) + '</th><td>' + val.mn_name + '</td><td>' + val.product_name + '</td><td>' + val.product_qty + ' (' + val.product_unit + ')</td><td>Rs. ' + val.price_per_unit + '</td><td>Rs. ' + total + '</td></tr>';
+          var html = '<tr><td scope="row">' + (i + 1) + '</td><td>' + val.mn_name + '</td><td>' + val.product_name + '</td><td>' + val.description + '</td><td>' + val.product_qty + '</td><td>' + val.product_unit + '</td></tr>';
           $('#product_details').append(html);
           grand_total = total + grand_total;
         });
-        $('.sub_total').text('Rs. ' + grand_total);
-        $('.gst').text('Rs. 0');
-        $('.grand_total').text('Rs. ' + grand_total);
+        // $('.sub_total').text('Rs. ' + grand_total);
+        // $('.gst').text('Rs. 0');
+        // $('.grand_total').text('Rs. ' + grand_total);
       }
     });
   }

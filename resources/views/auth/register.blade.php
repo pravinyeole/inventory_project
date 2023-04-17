@@ -1,6 +1,11 @@
 @extends('layouts.app_new')
 
 @section('content')
+<script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://use.fontawesome.com/b9bdbd120a.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
 <div class="container cnt-margin">
     <div class="row justify-content-center">
         <div class="col-md-12 cm-margin">
@@ -93,7 +98,13 @@
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
                             <div class="col-md-6">
-                                <input id="password" type="text" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-New-password" placeholder="password">
+                                <!-- <input id="password" type="text" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-New-password" placeholder="password"> -->
+                                <div class="input-group" id="show_hide_password">
+                                    <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" required autocomplete="new-New-password" placeholder="password">
+                                    <div class="input-group-addon">
+                                        <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                    </div>
+                                </div>
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -104,7 +115,13 @@
                         <div class="form-group row">
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
                             <div class="col-md-6">
-                                <input id="password-confirm" type="text" class="form-control" name="password_confirmation" required autocomplete="new-New-password" placeholder="Confirm Password">
+                                <!-- <input id="password-confirm" type="text" class="form-control" name="password_confirmation" required autocomplete="new-New-password" placeholder="Confirm Password"> -->
+                                <div class="input-group" id="conf_show_hide_password">
+                                    <input class="form-control @error('password') is-invalid @enderror" type="password" name="password_confirmation" required autocomplete="password-confirmation" placeholder="Confirm Password">
+                                    <div class="input-group-addon">
+                                        <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         </br>
@@ -124,4 +141,31 @@
         </div>
     </div>
 </div>
+<script>
+$(document).on('click',"#show_hide_password a",function(event) {
+    event.preventDefault();
+    if($('#show_hide_password input').attr("type") == "text"){
+        $('#show_hide_password input').attr('type', 'password');
+        $('#show_hide_password i').addClass( "fa-eye-slash" );
+        $('#show_hide_password i').removeClass( "fa-eye" );
+    }else if($('#show_hide_password input').attr("type") == "password"){
+        $('#show_hide_password input').attr('type', 'text');
+        $('#show_hide_password i').removeClass( "fa-eye-slash" );
+        $('#show_hide_password i').addClass( "fa-eye" );
+    }
+});
+
+$(document).on('click',"#conf_show_hide_password a",function(event) {
+    event.preventDefault();
+    if($('#conf_show_hide_password input').attr("type") == "text"){
+        $('#conf_show_hide_password input').attr('type', 'password');
+        $('#conf_show_hide_password i').addClass( "fa-eye-slash" );
+        $('#conf_show_hide_password i').removeClass( "fa-eye" );
+    }else if($('#conf_show_hide_password input').attr("type") == "password"){
+        $('#conf_show_hide_password input').attr('type', 'text');
+        $('#conf_show_hide_password i').removeClass( "fa-eye-slash" );
+        $('#conf_show_hide_password i').addClass( "fa-eye" );
+    }
+});
+</script>
 @endsection

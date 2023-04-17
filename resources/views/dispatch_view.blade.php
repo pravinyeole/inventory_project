@@ -172,13 +172,14 @@
       data: {
         _token: CSRF_TOKEN,
         order_id: order_id,
+        view_name: "dispatch",
       },
       dataType: 'JSON',
       success: function(data) {
         jQuery.each(data, function(i, val) {
           console.log(data);
-          var total = val.price_per_unit * val.product_qty;
-          var html = '<tr><th scope="row">' + (i + 1) + '</th><td>' + val.mn_name + '</td><td>' + val.name + '</td><td>' + val.product_qty + ' (' + val.product_unit + ')</td><td>Rs. ' + val.price_per_unit + '</td><td>Rs. ' + total + '</td></tr>';
+          var total = val.prod_price * val.provided_qty;
+          var html = '<tr><th scope="row">' + (i + 1) + '</th><td>' + val.mn_name + '</td><td>' + val.name + '</td><td>' + val.provided_qty + ' (' + val.unit_name + ')</td><td>Rs. ' + val.prod_price + '</td><td>Rs. ' + total + '</td></tr>';
           $('#product_details').append(html);
           grand_total = total + grand_total;
         });

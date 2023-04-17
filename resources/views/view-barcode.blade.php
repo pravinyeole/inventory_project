@@ -11,14 +11,26 @@ use Milon\Barcode\DNS2D;
     <title>Barcode PDF</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
+    <style>
+@media print {
+    .pageBreak {
+        page-break-after: always;
+    }
+}
+</style>
 </head>
 <body>
     <div class="container mt-5">
-        <!-- <h2 class="text-center mb-3">{{$data->barcode_id}}</h2> -->
 <?php
     $tag = new DNS1D();
-    // echo $tag->getBarcodeHTML($data->barcode_id, "C93",1,30,'green', true);
-    echo '<img src="data:image/png;base64,' . $tag->getBarcodePNG($data->barcode_id, 'C93',1,40,array(1,1,1), true) . '" alt="barcode"  style="margin:4px;padding:4px;"  /></n><br>';
+    foreach($data AS $d){
+        // echo $tag->getBarcodeHTML($d->barcode_id, "C93",1,30,'green', true);
+        for($i = 1;$i <= $d->qty;){
+            echo '<img src="data:image/png;base64,' . $tag->getBarcodePNG($d['barcode_id'], 'C93',1,40,array(1,1,1), true) . '" alt="barcode"  style="margin:4px;padding:4px;"  /></n><br>';
+            $i++;
+        }
+        
+    }
             
 ?>
     </div>
@@ -72,7 +84,7 @@ use Milon\Barcode\DNS2D;
 
     body {
         box-sizing: border-box;
-        height: 11in;
+        /* height: 11in; */
         margin: 0 auto;
         overflow: hidden;
         padding: 0.5in;

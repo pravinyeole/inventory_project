@@ -42,10 +42,18 @@ class OrderController extends Controller
     }    
     public function getOrderById(Request $request)
     {
-        $data = ClinicOrders::select('clinic_orders.id','order_id','clinic_orders.created_at','total_price','order_status','received_remarks','pn.name','clinic_orders.product_qty','clinic_orders.product_unit','manufacturer.name AS mn_name','clinic_orders.price_per_unit')->leftJoin('product_name AS pn','pn.id','=','clinic_orders.product_id')
-        ->leftJoin('manufacturer','manufacturer.id','=','clinic_orders.manfracture_id')
-        ->where('clinic_orders.order_id',$request->order_id)->orderBy('clinic_orders.id')->get();
-        return json_encode($data);
+        if(isset($request->view_name) && $request->view_name == "dispatch"){
+            $data = TBLDispatch::select('tbl_dispatch.id','order_id','tbl_dispatch.created_at','notes','pn.name','tbl_dispatch.provided_qty','tbl_dispatch.unit_name','manufacturer.name AS mn_name','tbl_dispatch.prod_price')->leftJoin('product_name AS pn','pn.id','=','tbl_dispatch.product_id')
+            ->leftJoin('manufacturer','manufacturer.id','=','tbl_dispatch.manufacturer_id')
+            ->where('tbl_dispatch.order_id',$request->order_id)->orderBy('tbl_dispatch.id')->get();
+            return json_encode($data);
+        }else{
+            $data = ClinicOrders::select('clinic_orders.id','order_id','clinic_orders.product_unit','clinic_orders.created_at','order_status','received_remarks','product_name.name AS product_name','clinic_orders.product_qty AS product_qty','manufacturer.name AS mn_name','product_name.description')
+            ->leftJoin('manufacturer','manufacturer.id','=','clinic_orders.manfracture_id')
+            ->leftJoin('product_name','product_name.id','=','clinic_orders.product_id')->where('clinic_orders.order_id',$request->order_id)->orderBy('clinic_orders.id')->get();
+            return json_encode($data);
+        }
+
     }    
     public function viewInvoice($orderId)
     {

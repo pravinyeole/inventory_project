@@ -35,21 +35,6 @@
                             </select>
                         </div>
                         <div>
-                            <label for="unit" class=" col-form-label text-md-right">{{ __('Unit') }}</label>
-                            <select name="unit" id="unit" class="form-select">
-                                <option value="" disabled selected>Select Unit</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="cost" class=" col-form-label text-md-right">{{ __('Cost Price/Unit') }}</label>
-                            <input id="cost" type="number" class="form-control @error('cost') is-invalid @enderror" name="cost" value="{{ old('cost') }}" required autocomplete="cost">
-                            @error('cost')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                        <div>
                             <label for="qty" class=" col-form-label text-md-right">{{ __('Quantity') }}</label>
                             <input id="qty" type="number" class="form-control @error('qty') is-invalid @enderror" name="qty" value="{{ old('qty') }}" required autocomplete="qty">
 
@@ -60,28 +45,44 @@
                             @enderror
                         </div>
                         <div>
-                            <label for="usage" class=" col-form-label text-md-right">{{ __('Usage') }}</label>
-                            <input id="usage" type="text" class="form-control @error('usage') is-invalid @enderror" name="usage" value="Usage" required autocomplete="usage">
-
-                            @error('usage')
+                            <label for="cost" class=" col-form-label text-md-right">{{ __('Cost Price/Unit') }}</label>
+                            <input id="cost" type="number" class="form-control @error('cost') is-invalid @enderror cost" name="cost" value="{{ old('cost') }}" required autocomplete="cost">
+                            @error('cost')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
                         </div>
                         <div>
-                            <label for="tags" class=" col-form-label text-md-right">{{ __('Tags') }}</label>
-                            <input id="tags" type="text" class="form-control" name="tags" value="Tags" required autocomplete="tags">
-                            @error('tags')
+                            <label for="new_barcode" class=" col-form-label text-md-right">{{ __('Barcode') }}</label> <span style="color:red;">(Optional)</span>
+                            <input id="new_barcode" type="text" class="form-control @error('new_barcode') is-invalid @enderror new_barcode" name="new_barcode" value="{{ old('new_barcode') }}" autocomplete="new_barcode">
+                            @error('new_barcode')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
                         </div>
-                        <div class="photo">
-                            <label for="photo" class=" col-form-label text-md-right">{{ __('Photo') }}</label>
-                            <input id="photo" type="file" class="form-control" name="photo" value="{{ old('photo') }}" autocomplete="photo">
-                            @error('photo')
+                        <!-- <div>
+                            <label for="unit" class=" col-form-label text-md-right">{{ __('Unit') }}</label> -->
+                            
+                            <input type="hidden" class="form-control unit_name" value="" readonly>
+                            <input type="hidden" class="form-control unit_id" name="unit" value="" readonly>
+                        <!-- </div>
+                        <div>
+                            <label for="usage" class=" col-form-label text-md-right">{{ __('Usage') }}</label> -->
+                            <input id="usage" type="hidden" class="form-control @error('usage') is-invalid @enderror usage" name="usage" required autocomplete="usage" readonly>
+
+                            <!-- @error('usage')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        <div>
+                            <label for="tags" class=" col-form-label text-md-right">{{ __('Tags') }}</label> -->
+                            <input id="tags" type="hidden" class="form-control tags" name="tags" required autocomplete="tags" readonly>
+                            <!-- 
+                            @error('tags')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -89,13 +90,18 @@
                         </div>
                         <div>
                             <label for="description" class=" col-form-label text-md-right">{{ __('Description') }}</label>
-                            <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="description" rows="3" cols="4"> </textarea>
+                            <textarea id="description" class="form-control description" name="description" rows="3" cols="4" readonly> </textarea>
                             @error('description')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
                         </div>
+                        <div class="photo photo_show">
+                            <label for="photo" class=" col-form-label text-md-right">{{ __('Image') }}</label>
+                            <img src="" style='width: 300px; height: 100px;'>
+                            <input type="hidden" class="form-control image_name" name="photo" value="">
+                        </div> -->
                         <div class="form-group row mb-0">
                             <div class="">
                                 <button type="submit" class="btn btn-primary btn-save-width">
@@ -165,14 +171,18 @@
                 _token: CSRF_TOKEN,
                 man_id: $('#manufacture_name').val(),
                 cat_id: $('#category').val(),
-                prod_id: $(this).val(),
+                prod_id: $('#product_name').val(),
             },
             dataType: 'JSON',
             success: function(data) {
-                jQuery.each(data, function(i, val) {
-                    // var vt = val.id+'--'+val.unit_id+'--'+val.category_id+'--'+val.prod_price;
-                    $('#unit').append(new Option(val.name, val.id));
-                });
+                // console.log("praduct details"+data.photo);
+                $('.usage').val(data.usage);
+                $('.tags').val(data.tags);
+                // $('.photo_show img').attr('src', "{{URL::to('/').'/images/'}}"+data.photo).show();
+                $('.description').val(data.description);
+                $('.unit_name').val(data.unit_model.name);
+                $('.unit_id').val(data.unit_model.id);
+                $('.image_name').val(data.photo);
             }
         });
     });

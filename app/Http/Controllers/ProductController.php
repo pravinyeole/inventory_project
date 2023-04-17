@@ -35,13 +35,25 @@ class ProductController extends Controller
         $validatedData = $request->validate([
             'product_name' => ['required'],
             'category_name' => ['required'],
-            'manu_name' => ['required'],
-            'unit_id' => ['required'],
+            'manu_name' => ['required']
         ]);
+        $image_name = 'no_image.jpg';
+        if ($request->hasFile('photo')) 
+        {
+            $image = $request->file('photo');
+            $image_name = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = base_path('public/images');
+            $image->move($destinationPath, $image_name);
+        }
+
         $data['name'] = ucfirst(strtolower($request['product_name']));
         $data['category_id'] = ucfirst(strtolower($request['category_name']));
         $data['manufracture_id'] = ucfirst(strtolower($request['manu_name']));
         // $data['prod_price'] = $request['cost'];
+        $data['usage'] = ucfirst(strtolower($request['usage']));
+        $data['tags'] = ucfirst(strtolower($request['tags']));
+        $data['photo'] = $image_name;
+        $data['description'] = ucfirst(strtolower($request['description']));
         $data['unit_id'] = $request['unit'];
         $data['is_active'] = 1;
         $data['user_id'] = $request['user_id'];
@@ -53,6 +65,18 @@ class ProductController extends Controller
 
     public function update_product(Request $request)
     {
+        if ($request->hasFile('photo')) 
+        {
+            $image = $request->file('photo');
+            $image_name = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = base_path('public/images');
+            $image->move($destinationPath, $image_name);
+        } 
+        else
+        {
+            $image_name = $request['old_photo'];
+        }
+
         $data['name'] = ucfirst(strtolower($request['name']));
         $data['category_id'] = $request['category_name'];
         if ($request['manu_name'] != 0) {
@@ -60,7 +84,10 @@ class ProductController extends Controller
         } else {
             $data['manufracture_id'] = $request['old_manu'];
         }
-        // $data['prod_price'] = $request['cost'];
+        $data['usage'] = ucfirst(strtolower($request['usage']));
+        $data['tags'] = ucfirst(strtolower($request['tags']));
+        $data['photo'] = $image_name;
+        $data['description'] = ucfirst(strtolower($request['description']));
         $data['unit_id'] = $request['unit'];
         $data['is_active'] = $request['is_active'];
         $data['user_id'] = $request['user_id'];
