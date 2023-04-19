@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Use_product;
 
 class TBLDispatch extends Model
 {
@@ -15,5 +16,10 @@ class TBLDispatch extends Model
     {
         $data = TBLDispatch::where(['clinic_id'=>Auth::user()->location_id])->get();
         return view('recive_product_list',compact('data'));
+    }
+
+    public function useProductModel()
+    {
+        return $this->hasMany('App\Use_product','tbl_dispatch_id');
     }
 }
