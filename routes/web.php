@@ -69,6 +69,9 @@ Route::any('/scan_product', 'ReceiveController@scan_product')->name('scan_produc
 Route::any('/received_orders', 'OrderController@receivedOrders')->name('received_orders');
 Route::any('/purchase_order', 'OrderController@purchaseOrder')->name('purchase_order');
 
+Route::any('/product_used', 'ReceiveController@product_used')->name('product_used');
+
+
 Route::any('/prod_by_category', 'AjaxController@prodByCategory')->name('prod_by_category');
 Route::any('/prod_details_by_unit_cat_man_prod', 'AjaxController@prodDetailsByUnitCatManProd')->name('prod_details_by_unit_cat_man_prod');
 Route::any('/unit_by_category_man', 'AjaxController@unitByCategoryMan')->name('unit_by_category_man');
@@ -85,7 +88,7 @@ Route::any('/stock_details', 'StoreController@stockDetails')->name('stock_detail
 Route::any('/unit_by_category_man_clinic', 'AjaxController@unitByCategoryManClinic')->name('unit_by_category_man_clinic');
 
 Route::any('/get_recive_id', 'ReceiveController@get_recive_id')->name('get_recive_id');
-
+Route::any('/get_use_id', 'ReceiveController@get_use_id')->name('get_use_id');
 
 Route::any('/stock-inword', 'ReportController@stockInword');
 Route::any('/stock-outword', 'ReportController@stockOutword');

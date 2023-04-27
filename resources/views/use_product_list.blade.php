@@ -80,7 +80,11 @@
                             {{$v['updated_qty']}}
                         </td>
                         <td>
+                            @if(isset($v['use_product_model'][0]))
                             {{$v['use_product_model'][0]['use_qty']}}
+                            @else
+                            0
+                            @endif
                         </td>
                         <td>
                         <button type="button" class="btn btn-info edit" data-toggle="modal" data-target=".bd-example-modal-lg"  row_id="{{$v['id']}}" onclick="viewOrders('{{ $v['barcode_id'] }}','{{$v['id']}}')">Edit Use product</button>
