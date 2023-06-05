@@ -13,7 +13,6 @@
                     <form method="POST" action="{{ url('update_stock') }}" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" class="form-control" name="user_id" value="{{ Auth::user()->id }}">
-                        <input type="hidden" class="form-control" name="tabel_id" value="{{ $data['id'] }}">
                         <div class="form-group row">
                             <label for="category" class="col-md-4 col-form-label text-md-right">{{ __('Category') }}</label>
 
