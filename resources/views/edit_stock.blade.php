@@ -19,7 +19,7 @@
                             <div class="col-md-6">
                                <select name="category" class="form-select">
                                     @foreach($category as $k => $val)
-                                      @if($data['category'] == $val)
+                                      @if($data['category'] == $val['category_name'])
                                       <option value="{{$val['id']}}" selected>{{$val['category_name']}}</option>
                                       @else
                                       <option value="{{$val['id']}}">{{$val['category_name']}}</option>
@@ -35,7 +35,7 @@
                             <div class="col-md-6">
                                 <select name="manufacture_name" class="form-select">
                                     @foreach($manu as $k => $val)
-                                      @if($data['manufacture_name'] == $val)
+                                      @if($data['manufacture_name'] == $val['name'])
                                       <option value="{{$val['id']}}" selected>{{$val['name']}}</option>
                                       @else
                                       <option value="{{$val['id']}}">{{$val['name']}}</option>
@@ -51,7 +51,7 @@
                             <div class="col-md-6">
                                 <select name="product_name" class="form-select">
                                     @foreach($product_name as $k => $val)
-                                      @if($data['product_name'] == $val)
+                                      @if($data['product_name'] == $val['name'])
                                       <option value="{{$val['id']}}" selected>{{$val['name']}}</option>
                                       @else
                                       <option value="{{$val['id']}}">{{$val['name']}}</option>
