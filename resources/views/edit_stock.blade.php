@@ -15,11 +15,11 @@
                         <input type="hidden" class="form-control" name="user_id" value="{{ Auth::user()->id }}">
                         <div class="form-group row">
                             <label for="category" class="col-md-4 col-form-label text-md-right">{{ __('Category') }}</label>
-
+                             
                             <div class="col-md-6">
                                <select name="category" class="form-select">
                                     @foreach($category as $k => $val)
-                                      @if($data['category'] == $val['category_name'])
+                                      @if($data['category'] == $val['id'])
                                       <option value="{{$val['id']}}" selected>{{$val['category_name']}}</option>
                                       @else
                                       <option value="{{$val['id']}}">{{$val['category_name']}}</option>
@@ -35,7 +35,7 @@
                             <div class="col-md-6">
                                 <select name="manufacture_name" class="form-select">
                                     @foreach($manu as $k => $val)
-                                      @if($data['manufacture_name'] == $val['name'])
+                                      @if($data['manufacture_name'] == $val['id'])
                                       <option value="{{$val['id']}}" selected>{{$val['name']}}</option>
                                       @else
                                       <option value="{{$val['id']}}">{{$val['name']}}</option>
@@ -51,7 +51,7 @@
                             <div class="col-md-6">
                                 <select name="product_name" class="form-select">
                                     @foreach($product_name as $k => $val)
-                                      @if($data['product_name'] == $val['name'])
+                                      @if($data['product_name'] == $val['id'])
                                       <option value="{{$val['id']}}" selected>{{$val['name']}}</option>
                                       @else
                                       <option value="{{$val['id']}}">{{$val['name']}}</option>
